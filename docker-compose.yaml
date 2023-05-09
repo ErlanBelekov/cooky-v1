@@ -1,13 +1,23 @@
-version: "3.7"
+version: "3.6"
 services:
+  # App services
   postgres:
-    image: postgres:latest
+    image: postgres:12
     restart: always
-    environment:
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=postgres
-      - POSTGRES_DB=postgres
-    ports:
-      - "5432:5432"
     volumes:
-      - ./postgres-data:/var/lib/postgresql/data
+      - cooky-db-data:/var/lib/postgresql/data
+    networks:
+      - default
+    environment:
+      POSTGRES_DB: development
+      POSTGRES_PASSWORD: postgrespassword
+    ports:
+      - 5432:5432
+
+networks:
+  default:
+    driver: bridge
+    name: hub_default
+
+volumes:
+  cooky-db-data:
