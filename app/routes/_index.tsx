@@ -1,11 +1,11 @@
-import type { V2_MetaFunction } from "@remix-run/node";
+import type { LoaderFunction, V2_MetaFunction } from "@remix-run/node";
+import { HomePage } from "~/pages";
 
 export const meta: V2_MetaFunction = () => [{ title: "Cooky" }];
 
-export default function Index() {
-  return (
-    <main className="relative flex min-h-screen items-center justify-center bg-yellow-500">
-      <p>Hello World!</p>
-    </main>
-  );
-}
+// load Home page with featured recipes
+export const loader: LoaderFunction = ({ request }) => {
+  return "Hey";
+};
+
+export default HomePage;
