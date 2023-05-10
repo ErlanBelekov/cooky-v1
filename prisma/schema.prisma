@@ -17,11 +17,29 @@ model User {
   recipes Recipe[]
 }
 
+model Tag {
+  id    Int    @id @default(autoincrement())
+  title String
+
+  recipes Recipe[]
+}
+
 model Recipe {
   id String @id @default(uuid())
 
   title String
 
+  tags Tag[]
+
+  images String[]
+
+  // can only be between 1-5
+  easeOfCookingRating Int?
+  prepTimeMinutes     Int?
+
   user   User   @relation(fields: [userId], references: [id])
   userId String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
 }
