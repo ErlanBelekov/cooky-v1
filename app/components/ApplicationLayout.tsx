@@ -104,7 +104,7 @@ export function ApplicationLayout({ children }: PropsWithChildren<unknown>) {
           </ul>
         </div>
       </aside>
-      <div className="bg-red-400 p-4 sm:ml-64">
+      <div className="h-screen bg-red-200 p-4 sm:ml-64">
         <div className="mt-14 rounded-lg border-2 border-dashed border-gray-200 bg-yellow-400 p-4 dark:border-gray-700">
           {children}
         </div>

@@ -19,7 +19,8 @@
     "typecheck": "tsc",
     "validate": "run-p \"test -- --run\" lint typecheck test:e2e:run",
     "prisma:gen": "prisma generate",
-    "migrate:dev": "prisma migrate dev"
+    "migrate:dev": "prisma migrate dev",
+    "seed": "prisma db seed"
   },
   "prettier": {},
   "eslintIgnore": [
