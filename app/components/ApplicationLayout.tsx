@@ -1,10 +1,11 @@
-import { Link } from "@remix-run/react";
+import { Link, Form, useLoaderData } from "@remix-run/react";
 import type { PropsWithChildren } from "react";
 
 import { HomeIcon } from "@heroicons/react/24/outline";
 
 import { Routes } from "~/constants";
 import { Avatar } from "~/ui";
+import type { User } from "@prisma/client";
 
 type NavigationLink = {
   to: Routes;
@@ -21,6 +22,7 @@ const NavigationLinks: NavigationLink[] = [
 ];
 
 export function ApplicationLayout({ children }: PropsWithChildren<unknown>) {
+  const loaderData = useLoaderData<{ user?: User }>();
   return (
     <div>
       <nav className="fixed top-0 z-50 w-full border-b border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-800">
@@ -66,16 +68,27 @@ export function ApplicationLayout({ children }: PropsWithChildren<unknown>) {
             </div>
             <div className="flex items-center">
               <div className="ml-3 flex items-center">
-                <button
-                  type="button"
-                  className="flex rounded-full bg-gray-800 text-sm focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600"
-                  aria-expanded="false"
-                  data-dropdown-toggle="dropdown-user"
-                  onClick={() => {}}
-                >
-                  <span className="sr-only">Open user menu</span>
-                  <Avatar src="https://flowbite.com/docs/images/people/profile-picture-5.jpg" />
-                </button>
+                {loaderData.user ? (
+                  <div className="flex items-center gap-2">
+                    <button
+                      type="button"
+                      className="flex rounded-full bg-gray-800 text-sm focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600"
+                      aria-expanded="false"
+                      data-dropdown-toggle="dropdown-user"
+                      onClick={() => {}}
+                    >
+                      <span className="sr-only">Open user menu</span>
+                      {loaderData.user.avatarUrl && (
+                        <Avatar src={loaderData.user.avatarUrl} />
+                      )}
+                    </button>
+                    <Form action="/auth/logout" method="post">
+                      <button>Logout</button>
+                    </Form>
+                  </div>
+                ) : (
+                  <Link to="/auth/login">Login</Link>
+                )}
               </div>
             </div>
           </div>
